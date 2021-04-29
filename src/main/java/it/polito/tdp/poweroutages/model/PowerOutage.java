@@ -1,6 +1,7 @@
 package it.polito.tdp.poweroutages.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class PowerOutage {
 
@@ -9,6 +10,8 @@ public class PowerOutage {
 	private int customers;
 	private LocalDateTime da;
 	private LocalDateTime a;
+	private double durataOre;
+	private int anno;
 	
 	public PowerOutage(int id, int nercId, int customers, LocalDateTime da, LocalDateTime a) {
 		this.id = id;
@@ -16,6 +19,8 @@ public class PowerOutage {
 		this.customers = customers;
 		this.da = da;
 		this.a = a;
+		this.durataOre = this.da.until(this.a, ChronoUnit.MINUTES)/60.0;
+		this.anno = this.da.getYear();
 	}
 
 	public int getId() {
@@ -56,6 +61,14 @@ public class PowerOutage {
 
 	public void setA(LocalDateTime a) {
 		this.a = a;
+	}
+
+	public double getDurataOre() {
+		return durataOre;
+	}
+
+	public int getAnno() {
+		return anno;
 	}
 
 	@Override

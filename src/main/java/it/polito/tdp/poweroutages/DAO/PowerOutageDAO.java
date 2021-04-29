@@ -36,15 +36,17 @@ public class PowerOutageDAO {
 		return nercList;
 	}
 	
-	public List<PowerOutage> getPowerOutageList() {
+	public List<PowerOutage> getPowerOutageList(int nercId) {
 
 		String sql = "SELECT `id`, `nerc_id`, `customers_affected`, `date_event_began`, `date_event_finished` "
-				+ "FROM `PowerOutages`";
+				+ "FROM `PowerOutages` "
+				+ "WHERE `nerc_id`=?";
 		List<PowerOutage> powerOutageList = new ArrayList<PowerOutage>();
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, nercId);
 			ResultSet res = st.executeQuery();
 
 			while (res.next()) {
@@ -64,9 +66,9 @@ public class PowerOutageDAO {
 		return powerOutageList;
 	}
 	
-	// NOTA: come prendere le date da database sql
-	// dal database prendo sempre una Date o Timestamp (se mi serve anche il tempo in ore/minuti), 
-	// nella classe PowerOutages ho dei LocalDateTime e nel dao
+	// NOTA: COME PRELEVARE LE DATE DA DATABASE SQL
+	// dal database prendo sempre una Date (getDate) o Timestamp (getTimestamp, se mi serve 
+	// anche il tempo in ore/minuti/sec), nella classe PowerOutages ho dei LocalDateTime quindi converto
 	// faccio rs.getTimestamp().toLocalDate() nel costruttore di PowerOutage
 
 }
